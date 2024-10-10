@@ -1,0 +1,55 @@
+[gd_scene load_steps=9 format=3 uid="uid://btov1y2gmiyra"]
+
+[ext_resource type="Texture2D" uid="uid://4p5l6usjb5y1" path="res://texture/Poliigon_GrassPatchyGround_4585_BaseColor.jpg" id="1_1f3hr"]
+[ext_resource type="Texture2D" uid="uid://dfgvvc1emwr40" path="res://texture/Poliigon_GrassPatchyGround_4585_Metallic.jpg" id="2_3dt3c"]
+[ext_resource type="Texture2D" uid="uid://b3r2nnbu4ny5f" path="res://texture/Poliigon_GrassPatchyGround_4585_Normal.png" id="3_0ug3j"]
+[ext_resource type="PackedScene" uid="uid://c1ry5pxkfrbji" path="res://tncs/ngokhong.tscn" id="4_dwu0y"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7122b"]
+sky_top_color = Color(0.297627, 0.472337, 0.598974, 1)
+sky_horizon_color = Color(0.598801, 0.66878, 0.678017, 1)
+ground_bottom_color = Color(0.0975788, 0.202782, 0.113096, 1)
+ground_horizon_color = Color(0.598801, 0.66878, 0.678017, 1)
+
+[sub_resource type="Sky" id="Sky_tlony"]
+sky_material = SubResource("ProceduralSkyMaterial_7122b")
+
+[sub_resource type="Environment" id="Environment_0c48m"]
+background_mode = 2
+sky = SubResource("Sky_tlony")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pt0c1"]
+albedo_texture = ExtResource("1_1f3hr")
+metallic = 1.0
+metallic_specular = 0.57
+metallic_texture = ExtResource("2_3dt3c")
+roughness = 0.86
+roughness_texture = ExtResource("3_0ug3j")
+normal_enabled = true
+normal_texture = ExtResource("3_0ug3j")
+ao_light_affect = 0.13
+uv1_triplanar = true
+
+[node name="map" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_0c48m")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.46679, 0.179184, 0, 0.358368, 0.93358, -0.5, 0.808504, -0.310356, 0, 0, 0)
+light_color = Color(1, 1, 0.988235, 1)
+shadow_enabled = true
+
+[node name="nen" type="CSGBox3D" parent="."]
+use_collision = true
+size = Vector3(100, 0.2, 100)
+material = SubResource("StandardMaterial3D_pt0c1")
+
+[node name="ngokhong" parent="." instance=ExtResource("4_dwu0y")]
+
+[connection signal="body_entered" from="ngokhong/gaynhuy" to="ngokhong/gaynhuy" method="_on_body_entered"]
+
+[editable path="ngokhong"]
+[editable path="ngokhong/gaynhuy"]
